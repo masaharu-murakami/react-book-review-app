@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 function Login() {
@@ -21,23 +22,24 @@ function Login() {
       <h1>ログイン</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="">Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="text"
+            id="email"
             value={email}
-            name=""
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {error && { error }}
+        {error && <p>{error}</p>}
         <button type="submit">ログイン </button>
       </form>
     </div>

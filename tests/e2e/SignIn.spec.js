@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("ログインフォームのエラーメッセージ表示テスト", async ({ page }) => {
   // ログインページに移動
-  await page.goto("http://localhost:5173");
+  await page.goto("http://localhost:5173"); // 正しい URL
 
   // メールアドレスとパスワードを入力せずにログインボタンをクリック
   await page.click('button:has-text("ログイン")');
@@ -10,7 +10,7 @@ test("ログインフォームのエラーメッセージ表示テスト", async
   // エラーメッセージが表示されることを確認
   await expect(
     page.locator("text=すべてのフィールドを入力してください。")
-  ).toBeVisible({ timeout: 10000 });
+  ).toBeVisible();
 
   // 無効なメールアドレスを入力
   await page.fill('input[type="text"]', "invalid-email");
@@ -19,6 +19,19 @@ test("ログインフォームのエラーメッセージ表示テスト", async
 
   // エラーメッセージが表示されることを確認
   await expect(
-    page.locator("text=有効なメールアドレスを入力してください。")
+    page.locator("text=有効なメールアドレスを入力してください")
   ).toBeVisible();
+
+  // 正しいメールアドレスとパスワードを入力
+  await page.fill('input[type="text"]', "test@example.com");
+  await page.fill('input[type="password"]', "password123");
+  await page.click('button:has-text("ログイン")');
+
+  // エラーメッセージが表示されないことを確認
+  await expect(
+    page.locator("text=すべてのフィールドを入力してください。")
+  ).toBeHidden();
+  await expect(
+    page.locator("text=有効なメールアドレスを入力してください")
+  ).toBeHidden();
 });
