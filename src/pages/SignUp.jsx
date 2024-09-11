@@ -1,27 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { apiUrl } from "../const";
 import Compressor from "compressorjs";
-import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [name, setName] = useState("");
-
   const [icon, setIcon] = useState(null);
   const [error, setError] = useState("");
 
-  // const handleNameChange = (e) => setName(e.target.value);
-  // const handleEmailChange = (e) => setEmail(e.target.value);
-  // const handlePasswordChange = (e) => setPassword(e.target.value);
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleIconChange = (e) => {
     if (e.target.files[0]) {
       setIcon(e.target.files[0]);
@@ -44,27 +44,30 @@ function SignUp() {
 
   const onSubmit = async (data) => {
     const { name, email, password } = data;
-
-    const imageFile = icon ? await compressImage(icon) : null; //compressImage は画像を圧縮するための関数
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    if (imageFile) {
-      formData.append("Icon", icon);
-    }
+    const imageFile = icon ? await compressImage(icon) : null;
+    const userData = {
+      name: name,
+      email: email,
+      password: password,
+    };
 
     try {
-      const response = await fetch(`${apiUrl}/signup`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(`${apiUrl}/users`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error("サーバーエラー");
+      if (response.status === 200) {
+        localStorage.setItem("authToken", response.data.token); // トークンをローカルストレージに保存
+        alert("登録が成功しました");
+        navigate("/");
+      } else {
+        throw new Error("サーバーエラー: " + response.status);
       }
-      alert("登録が成功しました");
     } catch (error) {
       setError(error.message);
     }
@@ -80,8 +83,8 @@ function SignUp() {
             type="text"
             id="name"
             {...register("name", { required: "名前は必須です" })}
-            {...(errors.name && <p>{errors.name.message}</p>)}
           />
+          {errors.name && <p>{errors.name.message}</p>}
         </div>
         <div>
           <label htmlFor="email">Email</label>
@@ -115,9 +118,6 @@ function SignUp() {
             accept="image/*"
             onChange={handleIconChange}
           />
-        </div>
-        <div>
-          <p>予定：ここにユーザアイコン画像を表示</p>
         </div>
         {error && <p>{error}</p>}
         <button type="submit">登録</button>
