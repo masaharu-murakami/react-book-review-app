@@ -1,14 +1,13 @@
 // rfce
 
 import React from "react";
-import { useState } from "react";
 import "./App.css";
-import SignIn from "./assets/SignIn";
+import AppRoute from "./routes/Route";
 
 function App() {
   return (
     <>
-      <SignIn />
+      <AppRoute />
     </>
   );
 }

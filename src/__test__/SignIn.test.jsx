@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SignIn from "../assets/SignIn.jsx"; // Loginコンポーネントへのパスを正しく指定してください
+import SignIn from "../pages/SignIn.jsx"; // Loginコンポーネントへのパスを正しく指定してください
 
 describe("Login Component", () => {
   test("renders the login form", () => {
