@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"; // axiosをインポート
 import { apiUrl } from "../const";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function BookReviewList() {
   const dispatch = useDispatch();
@@ -49,13 +50,11 @@ function BookReviewList() {
             <p className="text-gray-700 mt-2">{review.detail}</p>
             <p className="mt-4 text-yellow-500 font-semibold">レビュー: {review.review}</p>
             <p className="text-gray-600 mt-1">レビューした人: {review.reviewer}</p>
-            <a
-              href={review.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-              詳細をみる
-            </a>
+            <Link
+              to={`/detail/${review.id}`}
+              className="inline-block mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300">
+              詳細を見る
+            </Link>
           </li>
         ))}
       </ul>

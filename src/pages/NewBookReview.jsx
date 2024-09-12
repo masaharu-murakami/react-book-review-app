@@ -29,10 +29,14 @@ function NewBookReview() {
         }
       );
       setMessage("書籍レビューがアップロードされました！");
-      navigate("/")
+      navigate("/");
     } catch (error) {
-      setError("書籍レビューの登録に失敗しました")
+      setError("書籍レビューの登録に失敗しました");
     }
+  };
+
+  const handleGoBack = () => {
+    navigate("/");
   };
 
   return (
@@ -79,6 +83,7 @@ function NewBookReview() {
         </div>
         <button>登録する</button>
       </form>
+      <button onClick={handleGoBack}>ホームに戻る</button>
     </div>
   );
 }
