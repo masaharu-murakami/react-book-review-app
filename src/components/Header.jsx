@@ -12,15 +12,16 @@ const Header = () => {
 
   return (
     <header className="bg-gray-800 p-4 text-white">
-      <nav>
+      <nav className="mx-auto flex justify-between items-center">
         <ul className="flex space-x-4">
           <li>
             <Link to="/profile" className="hover:underline">
               プロフィール編集
             </Link>
+            <button onClick={handleLogout} className="ml-4 hover:underline">
+              ログアウト
+            </button>
           </li>
-          {/* 他のナビゲーションアイテム */}
-          <button onClick={handleLogout}>ログアウト</button>
         </ul>
       </nav>
     </header>

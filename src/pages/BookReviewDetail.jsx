@@ -35,21 +35,31 @@ function BookReviewDetail() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h1>本のタイトル：{bookReview.title}</h1>
-      <p>
-        <strong>URL:</strong>{" "}
-        <a href={bookReview.url} target="_blank" rel="noopener noreferrer">
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg border border-gray-200">
+      <h1 className="text-2xl font-bold mb-4 text-gray-800">本のタイトル：{bookReview.title}</h1>
+      <p className="mb-4">
+        <strong className="text-gray-700">URL:</strong>{" "}
+        <a
+          href={bookReview.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
           {bookReview.url}
         </a>
       </p>
-      <p>
-        <strong>詳細:</strong> {bookReview.detail}
+      <p className="mb-4">
+        <strong className="text-gray-700">詳細:</strong> {bookReview.detail}
       </p>
-      <p>
-        <strong>レビュー:</strong> {bookReview.review}
+      <p className="mb-4">
+        <strong className="text-gray-700">レビュー:</strong> {bookReview.review}
       </p>
-      <button onClick={() => navigate("/")}>戻る</button>
+      <button
+        onClick={() => navigate("/")}
+        className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+      >
+        戻る
+      </button>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import axios from "axios"; // axiosをインポート
 import { apiUrl } from "../const";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "../App.css";
 
 function BookReviewList() {
   const dispatch = useDispatch();
@@ -42,51 +43,58 @@ function BookReviewList() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800">
-        書籍レビュー一覧
-      </h1>
-      <ul className="space-y-6">
-        {reviews.map((review) => (
-          <li
-            key={review.id}
-            className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out p-6 rounded-lg border border-gray-200"
+    <div className="p-6 bg-gray-50 min-h-screen">
+  <h1 className="text-3xl font-bold mb-6 text-gray-800">
+    書籍レビュー一覧
+  </h1>
+  <ul className="space-y-6">
+    {reviews.map((review) => (
+      <li
+        key={review.id}
+        className="p-4 bg-white shadow-md rounded-lg border border-gray-200"
+      >
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          {review.title}
+        </h2>
+        <p className="text-gray-700 mb-1">ID: {review.id}</p>
+        <p className="text-gray-700 mb-3">
+          URL:{" "}
+          <a
+            href={review.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
           >
-            <h2 className="text-3xl font-bold mb-3 text-gray-900">
-              {review.title}
-            </h2>
-            <p className="text-sm text-gray-500">ID: {review.id}</p>
-            <p className="text-blue-600 hover:underline">
-              URL:{" "}
-              <a href={review.url} target="_blank" rel="noopener noreferrer">
-                {review.url}
-              </a>
-            </p>
-            <p className="text-gray-700 mt-2">{review.detail}</p>
-            <p className="mt-4 text-yellow-500 font-semibold">
-              レビュー: {review.review}
-            </p>
-            <p className="text-gray-600 mt-1">
-              レビューした人: {review.reviewer}
-            </p>
+            {review.url}
+          </a>
+        </p>
+        <p className="text-gray-700 mb-3">{review.detail}</p>
+        <p className="text-gray-700 mb-3">
+          レビュー: {review.review}
+        </p>
+        <p className="text-gray-700 mb-4">
+          レビューした人: {review.reviewer}
+        </p>
+        <div className="flex space-x-2">
+          <Link
+            to={`/detail/${review.id}`}
+            className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300"
+          >
+            詳細を見る
+          </Link>
+          {review.isMine && (
             <Link
-              to={`/detail/${review.id}`}
-              className="inline-block mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300"
+              to={`/edit/${review.id}`}
+              className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
             >
-              詳細を見る
+              編集
             </Link>
-            {review.isMine && ( // isMine が true の場合のみ編集ボタンを表示
-              <Link
-                to={`/edit/${review.id}`}
-                className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 ml-2"
-              >
-                編集
-              </Link>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
   );
 }
 
