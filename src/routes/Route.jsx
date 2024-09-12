@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import NewBookReview from "../pages/NewBookReview";
 import BookReviewDetail from "../pages/BookReviewDetail";
+import EditBookReview from "../pages/EditBookReview";
 
 function AppRoute() {
   return (
@@ -18,6 +19,7 @@ function AppRoute() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/new" element={<NewBookReview />} />
         <Route path="/detail/:id" element={<BookReviewDetail />} />
+        <Route path="/edit/:id" element={<EditBookReview />} />
       </Routes>
     </Router>
   );

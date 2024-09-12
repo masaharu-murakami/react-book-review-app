@@ -1,5 +1,5 @@
 import React from "react";
-import BookReviewList from "../components/BookReviewList";
+import BookReviewList from "./BookReviewList";
 import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
